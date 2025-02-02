@@ -1,0 +1,32 @@
+
+> accessibility-api@1.0.0 dev
+> npm run ensure-db && npm run migration:run && ts-node-dev server.ts
+
+
+> accessibility-api@1.0.0 ensure-db
+> ts-node ensureDatabase.ts
+
+Database "accessibilitydb" does not exist. Creating...
+Database "accessibilitydb" created successfully.
+
+> accessibility-api@1.0.0 migration:run
+> ts-node ./node_modules/typeorm/cli.js migration:run -d data-source.ts
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+query: CREATE TABLE "migrations" ("id" SERIAL NOT NULL, "timestamp" bigint NOT NULL, "name" character varying NOT NULL, CONSTRAINT "PK_8c82d7f526340ab734260ea46be" PRIMARY KEY ("id"))
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+0 migrations are already loaded in the database.
+1 migrations were found in the source code.
+1 migrations are new migrations must be executed.
+query: START TRANSACTION
+query: CREATE TABLE "accessibility_issue" ("id" SERIAL NOT NULL, "ruleName" character varying NOT NULL, "description" character varying NOT NULL, "suggestedFix" character varying NOT NULL, CONSTRAINT "PK_a88f64533fd37bb03f6c536c2c2" PRIMARY KEY ("id"))
+query: CREATE TABLE "accessibility_result" ("id" SERIAL NOT NULL, "complianceScore" double precision NOT NULL, "issues" jsonb NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_73e5665fb60b105a121045842bd" PRIMARY KEY ("id"))
+query: INSERT INTO "migrations"("timestamp", "name") VALUES ($1, $2) -- PARAMETERS: [1738357482118,"CreateAccessibilityTable1738357482118"]
+Migration CreateAccessibilityTable1738357482118 has been  executed successfully.
+query: COMMIT
+[INFO] 20:03:30 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.7.3)
+Data Source has been initialized!
+Accessibility issues seeded successfully.
+Server is running on http://localhost:5001
