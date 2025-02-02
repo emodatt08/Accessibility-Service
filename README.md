@@ -4,3 +4,4 @@ The Accessibility Analysis System is composed of a backend API(accessibility-api
 ## Instructions
 - Please run the command “sudo chmod +x start-projects.sh” and “./start-projects.sh” to setup, install dependencies and start the application.
 - Kindly navigate to accessibility-api and accessibility-app to have a look at their respective readmes
+- Kindly find the technical documentation(Accessibility Analysis System Documentation.docx), screenshots, a sample faulty html(faulty.html) and additional documents.
