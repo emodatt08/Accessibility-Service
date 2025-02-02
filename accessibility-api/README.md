@@ -100,10 +100,9 @@ PORT=3000
 OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-## Database Migrations and Seeding:
-- npx typeorm migration:run -d src/data-source.ts
-- npm run seed
-- npm start
+## Database Migrations:
+- npm run migration:run 
+- npm run dev
 
 ## Run API:
 - POST http://localhost:5001/api/accessibility/analyze
