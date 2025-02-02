@@ -1,5 +1,5 @@
 # WCAG Accessibility Application
-The Accessibility Analysis System is composed of a backend API and a frontend React application. The system is designed to help users analyze HTML files for accessibility issues. It performs a rule-based analysis for missing attributes (like alt for images) and skipped heading levels. Additionally, it integrates with OpenAI’s API to provide enhanced recommendations and fixed HTML output. The backend persists the results in a PostgreSQL database, while the frontend provides an interactive interface for file upload and result display.
+The Accessibility Analysis System is composed of a backend API(accessibility-api) and a frontend React application(accessibility-app). The system is designed to help users analyze HTML files for accessibility issues. It performs a rule-based analysis for missing attributes (like alt for images) and skipped heading levels. Additionally, it integrates with OpenAI’s API to provide enhanced recommendations and fixed HTML output. The backend persists the results in a PostgreSQL database, while the frontend provides an interactive interface for file upload and result display.
 
 ## Instructions
 - Please run the command “sudo chmod +x start-projects.sh” and “./start-projects.sh” to setup, install dependencies and start the application.
