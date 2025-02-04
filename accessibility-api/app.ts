@@ -5,7 +5,7 @@ var cors = require('cors');
 const app = express();
 //Allow CORS
 // app.use(cors({origin: 'http://localhost:5173'}));
-app.use();
+//app.use();
 
 // Middleware to parse JSON bodies.
 app.use(express.json());
