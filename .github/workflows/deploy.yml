@@ -79,7 +79,7 @@ jobs:
       - name: Restart accessibility-api via PM2
         working-directory: accessibility-api
         run: |
-          pm2 restart accessibility-api || pm2 start server.js --name accessibility-api
+          pm2 restart accessibility-api || pm2 start dist/server.js --name accessibility-api
 
       # ---------------------------------------------
       # Reload Nginx to pick up new React Build
