@@ -9,7 +9,7 @@ jobs:
     runs-on: [self-hosted, Linux]
 
     steps:
-      # Step 1: Checkout the latest code from the repository root
+      # Step 1: Checkout the latest code from the repository root main
       - name: Checkout code
         uses: actions/checkout@v4
 
