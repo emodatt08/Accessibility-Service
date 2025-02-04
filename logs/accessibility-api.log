@@ -1,0 +1,22 @@
+
+> accessibility-api@1.0.0 dev
+> npm run ensure-db && npm run migration:run && ts-node-dev server.ts
+
+
+> accessibility-api@1.0.0 ensure-db
+> ts-node ensureDatabase.ts
+
+Database "accessibilitydb" already exists.
+
+> accessibility-api@1.0.0 migration:run
+> ts-node ./node_modules/typeorm/cli.js migration:run -d data-source.ts
+
+query: SELECT * FROM current_schema()
+query: SELECT version();
+query: SELECT * FROM "information_schema"."tables" WHERE "table_schema" = 'public' AND "table_name" = 'migrations'
+query: SELECT * FROM "migrations" "migrations" ORDER BY "id" DESC
+No migrations are pending
+[INFO] 20:40:52 ts-node-dev ver. 2.0.0 (using ts-node ver. 10.9.2, typescript ver. 5.7.3)
+Data Source has been initialized!
+Accessibility issues seeded successfully.
+Server is running on http://localhost:5001

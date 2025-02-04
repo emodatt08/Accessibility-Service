@@ -1,0 +1,88 @@
+name: Accessibility-Service
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build-and-deploy:
+    runs-on: [self-hosted, Linux]
+
+    steps:
+      # Step 1: Checkout the latest code from the repository root
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Node.js environment using the specified version (e.g., 20.x)
+      - name: Setup Node.js 20.x 
+        uses: actions/setup-node@v3
+        with:
+          cache-dependency-path: accessibility-api/package-lock.json
+          node-version: '20.x'
+          cache: 'npm'
+
+      # -----------------------------------
+      # Build & Deploy accessibility-api
+      # -----------------------------------
+      - name: Install dependencies for accessibility-api
+        working-directory: accessibility-api
+        run: npm install
+
+      - name: Setup environment for accessibility-api
+        working-directory: accessibility-api
+        run: |
+          # Overwrite/create .env with the Supabase and OpenAI settings.
+          cat > .env <<'EOF'
+          # PostgreSQL Database Configuration (Supabase)
+          DB_HOST=db.paesqhrdgzpvhwjqqdhw.supabase.co
+          DB_PORT=5432
+          DB_USERNAME=postgres
+          DB_PASSWORD=
+          DB_NAME=postgres
+
+          # Server Port
+          PORT=5001
+
+          # OpenAI API Key
+          OPENAI_API_KEY=
+          EOF
+
+      - name: Build accessibility-api (if build script exists)
+        working-directory: accessibility-api
+        run: npm run build --if-present
+
+      # -----------------------------------
+      # Build & Deploy accessibility-app (React App)
+      # -----------------------------------
+      - name: Install dependencies for accessibility-app
+        working-directory: accessibility-app
+        run: npm install
+
+      - name: Build accessibility-app
+        working-directory: accessibility-app
+        run: npm run build --if-present
+
+      # ---------------------------------------------
+      # Deploy React Build to Nginx Directory
+      # ---------------------------------------------
+      - name: Deploy accessibility-app build to Nginx root
+        working-directory: accessibility-app
+        run: |
+          # Remove the old build files (adjust target path as needed)
+          sudo rm -rf /var/www/accessibility-app/*
+          # Copy the new build files into Nginx's directory
+          sudo cp -R dist/* /var/www/accessibility-app/
+
+      # ---------------------------------------------
+      # Restart Node.js API Using PM2
+      # ---------------------------------------------
+      - name: Restart accessibility-api via PM2
+        working-directory: accessibility-api
+        run: |
+          pm2 restart accessibility-api || pm2 start npm --name "accessibility-api" -- start
+
+      # ---------------------------------------------
+      # Reload Nginx to pick up new React Build
+      # ---------------------------------------------
+      - name: Reload Nginx
+        run: sudo systemctl reload nginx
